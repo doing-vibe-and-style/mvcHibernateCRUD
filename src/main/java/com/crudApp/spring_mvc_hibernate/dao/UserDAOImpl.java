@@ -6,7 +6,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -21,32 +20,27 @@ public class UserDAOImpl implements UserDAO{
         this.entityManager = entityManager;
     }
 
-    @Transactional
     @Override
     public void add(User user) {
         entityManager.persist(user);
     }
 
-    @Transactional
     @Override
     public User update(User user) {
         return entityManager.merge(user);
     }
 
-    @Transactional
     @Override
     public void remove(long id) {
         User user = entityManager.find(User.class, id);
         entityManager.remove(user);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public User getUser (long id) {
         return entityManager.find(User.class, id);
     }
 
-    @Transactional(readOnly = true)
     @Override
     public List<User> listUsers() {
         String jpql = "SELECT u FROM User u";
